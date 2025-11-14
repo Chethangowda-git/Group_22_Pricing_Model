@@ -86,6 +86,21 @@ public class BrowseProductPricePerformanceJPanel extends javax.swing.JPanel {
         backButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
 
+        txtSupplierSearch = new javax.swing.JTextField();
+txtSupplierSearch.setBorder(javax.swing.BorderFactory.createTitledBorder("Search Supplier"));
+txtSupplierSearch.setPreferredSize(new java.awt.Dimension(200, 80));
+
+txtProductSearch = new javax.swing.JTextField();
+txtProductSearch.setBorder(javax.swing.BorderFactory.createTitledBorder("Search Product"));
+txtProductSearch.setPreferredSize(new java.awt.Dimension(200, 80));
+
+btnSearch = new javax.swing.JButton("Search");
+btnSearch.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnSearchActionPerformed(evt);
+    }
+});
+
         setBackground(new java.awt.Color(0, 153, 153));
 
         productPerformanceTable.setModel(new javax.swing.table.DefaultTableModel(
