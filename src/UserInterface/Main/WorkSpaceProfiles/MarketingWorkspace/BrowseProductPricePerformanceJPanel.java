@@ -88,11 +88,11 @@ public class BrowseProductPricePerformanceJPanel extends javax.swing.JPanel {
 
         txtSupplierSearch = new javax.swing.JTextField();
 txtSupplierSearch.setBorder(javax.swing.BorderFactory.createTitledBorder("Search Supplier"));
-txtSupplierSearch.setPreferredSize(new java.awt.Dimension(200, 80));
+txtSupplierSearch.setPreferredSize(new java.awt.Dimension(200, 40));
 
 txtProductSearch = new javax.swing.JTextField();
 txtProductSearch.setBorder(javax.swing.BorderFactory.createTitledBorder("Search Product"));
-txtProductSearch.setPreferredSize(new java.awt.Dimension(200, 80));
+txtProductSearch.setPreferredSize(new java.awt.Dimension(200, 40));
 
 btnSearch = new javax.swing.JButton("Search");
 btnSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -100,6 +100,7 @@ btnSearch.addActionListener(new java.awt.event.ActionListener() {
         btnSearchActionPerformed(evt);
     }
 });
+
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -198,6 +199,45 @@ btnSearch.addActionListener(new java.awt.event.ActionListener() {
         loadAllProducts();
     }
 
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {
+
+    String sKey = txtSupplierSearch.getText().trim().toLowerCase();
+    String pKey = txtProductSearch.getText().trim().toLowerCase();
+
+    clearTable();
+
+    ArrayList<Supplier> suppliers = business.getSupplierDirectory().getSuplierList();
+
+    for (Supplier supplier : suppliers) {
+
+        boolean supplierMatch = supplier.getName().toLowerCase().contains(sKey);
+
+        for (Product product : supplier.getProductCatalog().getProductList()) {
+
+            boolean productMatch = product.toString().toLowerCase().contains(pKey);
+
+            if ((sKey.isEmpty() || supplierMatch) &&
+                (pKey.isEmpty() || productMatch)) {
+
+                ProductSummary summary = new ProductSummary(product);
+
+                Object[] row = new Object[8];
+                row[0] = supplier.getName();
+                row[1] = product.toString();
+                row[2] = product.getTargetPrice();
+                row[3] = summary.getSalesRevenues();
+                row[4] = summary.getNumberAboveTarget();
+                row[5] = summary.getNumberBelowTarget();
+                row[6] = summary.getProductPricePerformance();
+                row[7] = calculateStatus(summary);
+
+                ((DefaultTableModel) productPerformanceTable.getModel()).addRow(row);
+            }
+        }
+    }
+}
+
+
     private void productPerformanceTableMousePressed(java.awt.event.MouseEvent evt) {
         int selectedRow = productPerformanceTable.getSelectedRow();
         if (selectedRow >= 0) {
@@ -217,10 +257,17 @@ btnSearch.addActionListener(new java.awt.event.ActionListener() {
     }
 
     // Variables declaration
-    private javax.swing.JButton backButton;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable productPerformanceTable;
-    private javax.swing.JButton refreshButton;
+// Variables declaration
+private javax.swing.JButton backButton;
+private javax.swing.JLabel jLabel1;
+private javax.swing.JScrollPane jScrollPane1;
+private javax.swing.JTable productPerformanceTable;
+private javax.swing.JButton refreshButton;
+
+private javax.swing.JTextField txtSupplierSearch;   // <-- ADD
+private javax.swing.JTextField txtProductSearch;    // <-- ADD
+private javax.swing.JButton btnSearch;              // <-- ADD
+// End of variables declaration
+
     // End of variables declaration
 }
