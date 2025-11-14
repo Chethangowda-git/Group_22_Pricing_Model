@@ -70,14 +70,14 @@ class ConfigureABusiness {
         System.out.println("\nGenerating 50 suppliers with 50 products each...");
         SupplierDirectory supplierdirectory = business.getSupplierDirectory();
         
-        for (int i = 1; i <= 50; i++) {
+        for (int i = 1; i <= 3; i++) {//reducedXXX
             // Generate unique supplier name using Faker
             String supplierName = faker.company().name();
             Supplier supplier = supplierdirectory.newSupplier(supplierName);
             ProductCatalog catalog = supplier.getProductCatalog();
             
             // Generate 50 products for this supplier
-            for (int j = 1; j <= 50; j++) {
+            for (int j = 1; j <= 2; j++) {//reducedXXX
                 // Generate product name using Faker
                 String productName = faker.commerce().productName() + " " + faker.commerce().material();
                 
@@ -109,7 +109,7 @@ class ConfigureABusiness {
         CustomerDirectory customerdirectory = business.getCustomerDirectory();
         ArrayList<CustomerProfile> customerList = new ArrayList<>();
         
-        for (int i = 1; i <= 300; i++) {
+        for (int i = 1; i <= 5; i++) { //reducedXXX
             // Generate customer name using Faker
             String customerName = faker.name().fullName();
             Person customerPerson = persondirectory.newPerson(customerName);
