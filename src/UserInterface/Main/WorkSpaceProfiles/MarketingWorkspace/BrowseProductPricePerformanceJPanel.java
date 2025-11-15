@@ -86,6 +86,22 @@ public class BrowseProductPricePerformanceJPanel extends javax.swing.JPanel {
         backButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
 
+        txtSupplierSearch = new javax.swing.JTextField();
+txtSupplierSearch.setBorder(javax.swing.BorderFactory.createTitledBorder("Search Supplier"));
+txtSupplierSearch.setPreferredSize(new java.awt.Dimension(200, 40));
+
+txtProductSearch = new javax.swing.JTextField();
+txtProductSearch.setBorder(javax.swing.BorderFactory.createTitledBorder("Search Product"));
+txtProductSearch.setPreferredSize(new java.awt.Dimension(200, 40));
+
+btnSearch = new javax.swing.JButton("Search");
+btnSearch.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnSearchActionPerformed(evt);
+    }
+});
+
+
         setBackground(new java.awt.Color(0, 153, 153));
 
         productPerformanceTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -134,6 +150,17 @@ public class BrowseProductPricePerformanceJPanel extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+   .addComponent(txtSupplierSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+.addComponent(txtProductSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+.addComponent(btnSearch)
+
+
+)
+.addGap(20, 20, 20)
+
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(backButton)
@@ -147,6 +174,13 @@ public class BrowseProductPricePerformanceJPanel extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
                 .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+    .addComponent(txtSupplierSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+    .addComponent(txtProductSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+    .addComponent(btnSearch)
+)
+.addGap(15, 15, 15)
+
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -156,14 +190,57 @@ public class BrowseProductPricePerformanceJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>
 
-    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-    }
+ private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {
+            CardSequencePanel.remove(this);
+            ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+    // java.awt.CardLayout layout = (java.awt.CardLayout) CardSequencePanel.getLayout();
+    // layout.previous(CardSequencePanel);
+}
+
+
 
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {
         loadAllProducts();
     }
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {
+
+    String sKey = txtSupplierSearch.getText().trim().toLowerCase();
+    String pKey = txtProductSearch.getText().trim().toLowerCase();
+
+    clearTable();
+
+    ArrayList<Supplier> suppliers = business.getSupplierDirectory().getSuplierList();
+
+    for (Supplier supplier : suppliers) {
+
+        boolean supplierMatch = supplier.getName().toLowerCase().contains(sKey);
+
+        for (Product product : supplier.getProductCatalog().getProductList()) {
+
+            boolean productMatch = product.toString().toLowerCase().contains(pKey);
+
+            if ((sKey.isEmpty() || supplierMatch) &&
+                (pKey.isEmpty() || productMatch)) {
+
+                ProductSummary summary = new ProductSummary(product);
+
+                Object[] row = new Object[8];
+                row[0] = supplier.getName();
+                row[1] = product.toString();
+                row[2] = product.getTargetPrice();
+                row[3] = summary.getSalesRevenues();
+                row[4] = summary.getNumberAboveTarget();
+                row[5] = summary.getNumberBelowTarget();
+                row[6] = summary.getProductPricePerformance();
+                row[7] = calculateStatus(summary);
+
+                ((DefaultTableModel) productPerformanceTable.getModel()).addRow(row);
+            }
+        }
+    }
+}
+
 
     private void productPerformanceTableMousePressed(java.awt.event.MouseEvent evt) {
         int selectedRow = productPerformanceTable.getSelectedRow();
@@ -184,10 +261,17 @@ public class BrowseProductPricePerformanceJPanel extends javax.swing.JPanel {
     }
 
     // Variables declaration
-    private javax.swing.JButton backButton;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable productPerformanceTable;
-    private javax.swing.JButton refreshButton;
+// Variables declaration
+private javax.swing.JButton backButton;
+private javax.swing.JLabel jLabel1;
+private javax.swing.JScrollPane jScrollPane1;
+private javax.swing.JTable productPerformanceTable;
+private javax.swing.JButton refreshButton;
+
+private javax.swing.JTextField txtSupplierSearch;   // <-- ADD
+private javax.swing.JTextField txtProductSearch;    // <-- ADD
+private javax.swing.JButton btnSearch;              // <-- ADD
+// End of variables declaration
+
     // End of variables declaration
 }
