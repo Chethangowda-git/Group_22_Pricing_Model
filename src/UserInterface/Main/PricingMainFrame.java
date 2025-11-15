@@ -73,7 +73,12 @@ public class PricingMainFrame extends javax.swing.JFrame {
         jLabel1.setText("User Name");
         actionsidejpanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
 
-        UserNameTextField.setText("sales");
+        UserNameTextField.setText("marketing");
+        UserNameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UserNameTextFieldActionPerformed(evt);
+            }
+        });
         actionsidejpanel.add(UserNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 130, -1));
 
         PasswordTextField.setText("XXXX");
@@ -139,6 +144,10 @@ public class PricingMainFrame extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_LoginButtonActionPerformed
+
+    private void UserNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserNameTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UserNameTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
