@@ -128,37 +128,41 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
         );
     }// </editor-fold>
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
-        // Browse Product Performance
-        CardSequencePanel.removeAll();
-        BrowseProductPricePerformanceJPanel panel = new BrowseProductPricePerformanceJPanel(business, CardSequencePanel);
-        CardSequencePanel.add("BrowsePerformance", panel);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-    }
+  private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
+    BrowseProductPricePerformanceJPanel panel =
+            new BrowseProductPricePerformanceJPanel(business, CardSequencePanel);
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {
-        // Adjust Target Prices
-        CardSequencePanel.removeAll();
-        AdjustTargetPricesJPanel panel = new AdjustTargetPricesJPanel(business, CardSequencePanel);
-        CardSequencePanel.add("AdjustPrices", panel);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-    }
+    CardSequencePanel.add("BrowsePerformance", panel);
+    ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+}
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {
-        // Run Simulation
-        CardSequencePanel.removeAll();
-        RunSimulationJPanel panel = new RunSimulationJPanel(business, CardSequencePanel);
-        CardSequencePanel.add("RunSimulation", panel);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-    }
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {
-        // Generate Performance Report
-        CardSequencePanel.removeAll();
-        GenerateReportJPanel panel = new GenerateReportJPanel(business, CardSequencePanel);
-        CardSequencePanel.add("GenerateReport", panel);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-    }
+   private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {
+    AdjustTargetPricesJPanel panel =
+            new AdjustTargetPricesJPanel(business, CardSequencePanel);
+
+    CardSequencePanel.add("AdjustPrices", panel);
+    ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+}
+
+
+   private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {
+    RunSimulationJPanel panel =
+            new RunSimulationJPanel(business, CardSequencePanel);
+
+    CardSequencePanel.add("RunSimulation", panel);
+    ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+}
+
+
+   private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {
+    GenerateReportJPanel panel =
+            new GenerateReportJPanel(business, CardSequencePanel);
+
+    CardSequencePanel.add("GenerateReport", panel);
+    ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+}
+
 
     // Variables declaration
     private javax.swing.JButton jButton10;
