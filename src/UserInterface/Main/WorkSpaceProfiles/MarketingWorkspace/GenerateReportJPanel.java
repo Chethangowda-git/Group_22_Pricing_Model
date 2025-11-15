@@ -273,15 +273,58 @@ public class GenerateReportJPanel extends javax.swing.JPanel {
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }
 
-    private void exportButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // Optional: Implement CSV export functionality
-        javax.swing.JOptionPane.showMessageDialog(this,
-            "Export functionality can be implemented here.\n" +
-            "For now, you can copy data from the table.",
-            "Export",
-            javax.swing.JOptionPane.INFORMATION_MESSAGE);
-    }
+private void exportButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
+    exportTableToCSV(reportTable);
+}
 
+
+
+    private void exportTableToCSV(javax.swing.JTable table) {
+    javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
+    fileChooser.setDialogTitle("Save CSV File");
+    
+    int userSelection = fileChooser.showSaveDialog(this);
+    
+    if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
+        java.io.File fileToSave = fileChooser.getSelectedFile();
+
+        // Ensure .csv extension
+        if (!fileToSave.getAbsolutePath().toLowerCase().endsWith(".csv")) {
+            fileToSave = new java.io.File(fileToSave.getAbsolutePath() + ".csv");
+        }
+
+        try (java.io.PrintWriter csvWriter = new java.io.PrintWriter(fileToSave)) {
+
+            // Write column headers
+            javax.swing.table.TableModel model = table.getModel();
+            for (int i = 0; i < model.getColumnCount(); i++) {
+                csvWriter.print(model.getColumnName(i));
+                if (i < model.getColumnCount() - 1) csvWriter.print(",");
+            }
+            csvWriter.println();
+
+            // Write rows
+            for (int row = 0; row < model.getRowCount(); row++) {
+                for (int col = 0; col < model.getColumnCount(); col++) {
+                    csvWriter.print(model.getValueAt(row, col));
+                    if (col < model.getColumnCount() - 1) csvWriter.print(",");
+                }
+                csvWriter.println();
+            }
+
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "CSV exported successfully:\n" + fileToSave.getAbsolutePath(),
+                "Export Complete", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Error saving file:\n" + e.getMessage(),
+                "Export Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
+
+    
     // Variables declaration
     private javax.swing.JButton backButton;
     private javax.swing.JButton exportButton;
