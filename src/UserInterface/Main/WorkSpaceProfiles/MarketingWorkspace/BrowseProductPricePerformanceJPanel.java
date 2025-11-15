@@ -190,10 +190,14 @@ btnSearch.addActionListener(new java.awt.event.ActionListener() {
         );
     }// </editor-fold>
 
-    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-    }
+ private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {
+            CardSequencePanel.remove(this);
+            ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+    // java.awt.CardLayout layout = (java.awt.CardLayout) CardSequencePanel.getLayout();
+    // layout.previous(CardSequencePanel);
+}
+
+
 
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {
         loadAllProducts();
